@@ -1,0 +1,1 @@
+gcc main.cpp studentValidation/UserAuth.cpp sqlite3.c -o app -I. -lstdc++
