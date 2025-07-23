@@ -1,0 +1,11 @@
+# VS Code
+.vscode/
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Build directories
+build/
+bin/
