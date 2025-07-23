@@ -1,41 +1,42 @@
 #include "PomodoroTimer.h"
 #include <iostream>
-#include <iomanip>
-#include <unistd.h> // for sleep()
-
-void displayTime(int seconds) {
-    int minutes = seconds / 60;
-    int secs = seconds % 60;
-    std::cout << "\rTime remaining: " 
-              << std::setw(2) << std::setfill('0') << minutes << ":" 
-              << std::setw(2) << std::setfill('0') << secs << " "
-              << std::flush;
-}
+#include <ctime>
 
 int main() {
-    PomodoroTimer timer(1, 1); // 1 minute work, 1 minute break for testing
-    
+    int workMinutes, breakMinutes;
+
+    std::cout << "Enter work time in minutes: ";
+    std::cin >> workMinutes;
+
+    std::cout << "Enter break time in minutes: ";
+    std::cin >> breakMinutes;
+
+    PomodoroTimer timer(workMinutes, breakMinutes);
+
     timer.setWorkStartCallback([]() {
-        std::cout << "\nWork phase started! Focus!\n";
+        std::cout << "\n🔨 Work phase started!\n";
     });
-    
+
     timer.setBreakStartCallback([]() {
-        std::cout << "\nBreak phase started! Relax!\n";
+        std::cout << "\n☕ Break phase started!\n";
     });
-    
-    timer.setTimerUpdateCallback(displayTime);
-    
-    std::cout << "Starting Pomodoro Timer (1 min work, 1 min break)\n";
+
+    timer.setTimerUpdateCallback([](int remainingSeconds) {
+        std::cout << "⏳ Remaining: " << remainingSeconds << " seconds\r";
+        std::cout.flush();
+    });
+
     timer.start();
-    
-    // Main loop
-    for (int i = 0; i < 300; i++) { // Run for ~5 minutes
-        timer.update();
-        sleep(1); // Wait for 1 second
+
+    // Basic loop to simulate a ticking timer without using this_thread
+    std::time_t lastUpdate = std::time(nullptr);
+    while (true) {
+        std::time_t now = std::time(nullptr);
+        if (now != lastUpdate) {
+            lastUpdate = now;
+            timer.update();
+        }
     }
-    
-    timer.stop();
-    std::cout << "\nTimer stopped.\n";
-    
+
     return 0;
 }
