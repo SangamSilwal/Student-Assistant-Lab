@@ -20,6 +20,11 @@
 #define WHITE "\033[37m"
 #define BOLD "\033[1m"
 
+
+
+// gcc main.cpp studentValidation/UserAuth.cpp utility/utils.cpp assigments/Assignment.cpp calender/calender.cpp todo-list/TodoList.cpp sqlite3.c -o app -I. -lstdc++
+
+
 int main()
 {
     sqlite3 *db;
