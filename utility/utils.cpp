@@ -1,3 +1,5 @@
+
+
 #include "utils.h"
 #include <iostream>
 #include <ctime>
@@ -45,7 +47,8 @@ void Utility::printMenu() {
     std::cout << GREEN << " 1. [+] " << CYAN << "Add New Assignment" << RESET << std::endl;
     std::cout << GREEN << " 2. [*] " << CYAN << "View All Assignments" << RESET << std::endl;
     std::cout << GREEN << " 3. [@] " << CYAN << "View Assignment Calendar" << RESET << std::endl;
-    std::cout << GREEN << " 4. [X] " << CYAN << "Exit System" << RESET << std::endl;
+    std::cout << GREEN << " 4. [T] " << CYAN << "Todo List" << RESET << std::endl;
+    std::cout << GREEN << " 5. [X] " << CYAN << "Exit System" << RESET << std::endl;
     
     printLine('-', 50, BLUE);
     std::cout << YELLOW << " >> " << BOLD << "Enter your choice (1-4): " << RESET;
