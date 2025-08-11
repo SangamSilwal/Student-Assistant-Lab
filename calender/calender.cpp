@@ -1,11 +1,4 @@
-#include "assigments/Assignments.h"
-#include "utility/utils.h"
-#include <iostream>
-#include <ctime>
-#include <iomanip>
-#include <set>
-#include <string>
-#include <limits>
+#include "calender.h"
 
 int getDayFromDate(const std::string& date) {
     if (date.size() != 10 || date[4] != '-' || date[7] != '-') return -1;
@@ -17,7 +10,7 @@ int getDayFromDate(const std::string& date) {
 }
 
 
-void printCalendarWithAssignments(const std::vector<AssignmentData>& assignments,Utility utils) {
+void printCalendarWithAssignments(const std::vector<AssignmentData>& assignments,Utility& utils) {
     time_t now = time(nullptr);
     if (now == -1) {
         utils.printErrorMessage("Failed to get current time");

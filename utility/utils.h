@@ -1,3 +1,6 @@
+#ifndef UTILS_H
+#define UTILS_H
+
 #include <iostream>
 #include <ctime>
 #include <iomanip>
@@ -31,3 +34,5 @@ class Utility
     void printWarningMessage(const std::string& message);
 
 };
+
+#endif
