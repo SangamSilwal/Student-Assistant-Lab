@@ -108,7 +108,7 @@ int main()
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            utils.printErrorMessage("[ERROR] Invalid input! Please enter a number between 1-5.");
+            utils.printErrorMessage("[ERROR] Invalid input! Please enter a number between 1-7.");
             utils.waitForUserInput();
             continue;
         }
