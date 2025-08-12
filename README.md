@@ -1,4 +1,4 @@
-# 🎓 Student Assignment Management System
+# 🎓 Student Assistant
 
 [![C++](https://img.shields.io/badge/Language-C++-blue.svg)](https://isocpp.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](https://github.com/SangamSilwal/Student-Assistant-Lab)
