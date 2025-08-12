@@ -2,7 +2,6 @@
 
 [![C++](https://img.shields.io/badge/Language-C++-blue.svg)](https://isocpp.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](https://github.com/SangamSilwal/Student-Assistant-Lab)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 A comprehensive console-based application designed to help students organize, manage, and track their academic assignments and study routines efficiently. This C++ application provides an intuitive interface for managing academic responsibilities and keeping track of important deadlines.
 
@@ -297,12 +296,13 @@ If you encounter any issues or have questions:
 
 ## 👨‍💻 Author
 
-**Sangam Silwal**
+
 - GitHub: [@SangamSilwal](https://github.com/SangamSilwal)
-**Sambhav Regmi**
+**Sangam Silwal**
 - GitHub: [@sambhav605](https://github.com/sambhav605)
-**Rupak Adhikari**
+**Sambhav Regmi**
 - GitHub: [@sampletestg](https://github.com/sampletestg)
+**Rupak Adhikari**
 
 
 
