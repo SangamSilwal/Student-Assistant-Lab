@@ -1,3 +1,1 @@
-gcc main.cpp studentValidation/UserAuth.cpp sqlite3.c -o app -I. -lstdc++
-
-new code
+gcc main.cpp studentValidation/UserAuth.cpp utility/utils.cpp assigments/Assignment.cpp calender/calender.cpp todo-list/TodoList.cpp routine/Routine.cpp pomodoroTimer/PomodoroTimer.cpp sqlite3.c -o app -I. -lstdc++

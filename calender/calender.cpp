@@ -1,0 +1,98 @@
+#include "calender.h"
+
+int getDayFromDate(const std::string& date) {
+    if (date.size() != 10 || date[4] != '-' || date[7] != '-') return -1;
+    try {
+        return std::stoi(date.substr(8, 2));
+    } catch (...) {
+        return -1;
+    }
+}
+
+
+void printCalendarWithAssignments(const std::vector<AssignmentData>& assignments, Utility& utils) {
+    time_t now = time(nullptr);
+    if (now == -1) {
+        utils.printErrorMessage("Failed to get current time");
+        return;
+    }
+
+    tm* localtm = localtime(&now);
+    if (!localtm) {
+        utils.printErrorMessage("Failed to get local time");
+        return;
+    }
+
+    int year = 1900 + localtm->tm_year;
+    int month = 1 + localtm->tm_mon;
+
+    tm firstDay = {0};
+    firstDay.tm_year = localtm->tm_year;
+    firstDay.tm_mon = localtm->tm_mon;
+    firstDay.tm_mday = 1;
+    mktime(&firstDay);
+    int startWeekday = firstDay.tm_wday;
+    int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int dim = daysInMonth[month - 1];
+
+    if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))) {
+        dim = 29;
+    }
+
+    std::set<int> dueDays;
+    for (const auto& a : assignments) {
+        std::string prefix = std::to_string(year) + "-" + (month < 10 ? "0" : "") + std::to_string(month) + "-";
+        if (a.due_date.substr(0, 7) == prefix.substr(0, 7)) {
+            int day = getDayFromDate(a.due_date);
+            if (day > 0) dueDays.insert(day);
+        }
+    }
+
+    utils.printSectionHeader("ASSIGNMENT CALENDAR", "[@]");
+    std::string monthNames[] = {"", "January", "February", "March", "April", "May", "June",
+                              "July", "August", "September", "October", "November", "December"};
+    
+    // Print month header with background
+    std::cout << BG_BRIGHT_BLUE << BLACK << BOLD;
+    utils.printCentered(monthNames[month] + " " + std::to_string(year), 30);
+    std::cout << RESET << std::endl;
+    
+    // Print weekday headers with background
+    std::cout << BG_BRIGHT_MAGENTA << BLACK << " Su  Mo  Tu  We  Th  Fr  Sa" << RESET << std::endl;
+    utils.printLine('-', 28, BLUE);
+
+
+
+   for (int i = 0; i < startWeekday; i++) 
+    std::cout << BG_BRIGHT_BLACK << "    " << RESET;
+
+for (int day = 1; day <= dim; day++) {
+    // Base styling for all cells
+    std::cout << BG_BRIGHT_BLACK << WHITE;  // Dark background with white text
+    
+    if (day == localtm->tm_mday) {
+        // Current day - highlight with accent color
+        std::cout << BG_BRIGHT_BLUE << WHITE << BOLD;
+    } else if (dueDays.count(day)) {
+        // Due day - subtle warning
+        std::cout << BG_BRIGHT_BLACK << BRIGHT_RED << BOLD;
+    }
+
+    // Day number display
+    if (dueDays.count(day)) {
+        std::cout << std::setw(2) << day << "*" << RESET << " ";
+    } else {
+        std::cout << std::setw(2) << day << " " << RESET << " ";
+    }
+
+    if ((startWeekday + day) % 7 == 0 || day == dim)
+        std::cout << std::endl;
+}
+
+    std::cout << std::endl;
+    // Legend with background
+    std::cout << BG_BRIGHT_BLACK << WHITE << "Legend: " 
+              << BG_BRIGHT_YELLOW << BLACK << " Today " << RESET << " "
+              << BG_BRIGHT_RED << WHITE << " Due Date " << RESET << std::endl;
+    utils.printLine('=', 60, MAGENTA);
+}
