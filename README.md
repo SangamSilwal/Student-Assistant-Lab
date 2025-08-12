@@ -17,8 +17,6 @@ A comprehensive console-based application designed to help students organize, ma
 - [How It Works](#how-it-works)
 - [Contributing](#contributing)
 - [Future Enhancements](#future-enhancements)
-- [License](#license)
-- [Contact](#contact)
 
 ## ✨ Features
 
@@ -94,20 +92,18 @@ A comprehensive console-based application designed to help students organize, ma
 
 2. **Compile the program**
    ```bash
-   # For GCC/Clang
-   g++ -o student_manager main.cpp utility.cpp assignment.cpp -std=c++11
    
    # For Windows (MinGW)
-   g++ -o student_manager.exe main.cpp utility.cpp assignment.cpp -std=c++11
+   gcc main.cpp studentValidation/UserAuth.cpp utility/utils.cpp assigments/Assignment.cpp calender/calender.cpp todo-list/TodoList.cpp routine/Routine.cpp pomodoroTimer/PomodoroTimer.cpp sqlite3.c -o app -I. -lstdc++
    ```
 
 3. **Run the application**
    ```bash
    # Linux/macOS
-   ./student_manager
+   ./app
    
    # Windows
-   student_manager.exe
+   app.exe
    ```
 
 ## 💻 Usage
@@ -306,7 +302,7 @@ If you encounter any issues or have questions:
 **Sambhav Regmi**
 - GitHub: [@sambhav605](https://github.com/sambhav605)
 **Rupak Adhikari**
-- GitHub: [@rupakAdhikari](https://github.com/sampletestg)
+- GitHub: [@sampletestg](https://github.com/sampletestg)
 
 
 
