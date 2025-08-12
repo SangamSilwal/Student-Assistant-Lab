@@ -3,6 +3,19 @@
 
 #include <string>
 #include <sqlite3.h>
+#include "utility/colorHeader.h"
+
+#include <iomanip>
+
+struct TaskStats {
+    int totalTasks;
+    int completedTasks;
+    int pendingTasks;
+    int highPriorityTasks;
+    int mediumPriorityTasks;
+    int lowPriorityTasks;
+};
+
 
 class TodoList {
 public:
@@ -11,6 +24,9 @@ public:
     void removeTask(int id);
     void markTaskDone(int id);
     void viewTasks();
+    void displayStatistics();
+    TaskStats getStatistics();
+
 
 private:
     sqlite3 *db;

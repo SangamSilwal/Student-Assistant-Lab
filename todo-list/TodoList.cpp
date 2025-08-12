@@ -1,10 +1,7 @@
 #include "TodoList.h"
+#include "utility/utils.h"
 #include <iostream>
 
-const std::string RESET   = "\033[0m";
-const std::string GREEN   = "\033[32m";
-const std::string YELLOW  = "\033[33m";
-const std::string RED     = "\033[31m";
 
 TodoList::TodoList(sqlite3 *db, int userId) {
     this->db = db;
@@ -91,4 +88,77 @@ void TodoList::viewTasks() {
         std::cerr << "SQL error (viewTasks): " << errMsg << "\n";
         sqlite3_free(errMsg);
     }
+}
+
+
+TaskStats TodoList::getStatistics() {
+    TaskStats stats = {0, 0, 0};
+    
+    const char* sql = "SELECT COUNT(*) as total, "
+                      "SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as completed, "
+                      "SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending "
+                      "FROM todo WHERE user_id = ?;";
+    
+    sqlite3_stmt* stmt;
+    int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
+        return stats;
+    }
+    
+   
+    sqlite3_bind_int(stmt, 1, userId);
+    
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        stats.totalTasks = sqlite3_column_int(stmt, 0);
+        stats.completedTasks = sqlite3_column_int(stmt, 1);
+        stats.pendingTasks = sqlite3_column_int(stmt, 2);
+    } else {
+        std::cerr << "Failed to get statistics: " << sqlite3_errmsg(db) << "\n";
+    }
+    
+    sqlite3_finalize(stmt);
+    return stats;
+}
+
+
+void TodoList::displayStatistics() {
+    Utility utils;
+    TaskStats stats = getStatistics();
+
+    int total = stats.totalTasks;
+    int completed = stats.completedTasks;
+    int pending = stats.pendingTasks;
+
+   
+    double completedPercent = (total > 0) ? (completed * 100.0 / total) : 0;
+    double pendingPercent   = (total > 0) ? (pending   * 100.0 / total) : 0;
+
+    
+    std::cout << CYAN << "||" << BOLD << YELLOW << "         [T] TASK STATISTICS       " 
+              << RESET << CYAN << "||" << RESET << std::endl;
+    std::cout << CYAN << "|| " << WHITE  << "Total Tasks:      " << BOLD << std::setw(15) << total     << RESET << CYAN << " ||" << RESET << std::endl;
+    std::cout << CYAN << "|| " << GREEN  << "Completed:        " << BOLD << std::setw(15) << completed << RESET << CYAN << " ||" << RESET << std::endl;
+    std::cout << CYAN << "|| " << YELLOW << "Pending:          " << BOLD << std::setw(15) << pending   << RESET << CYAN << " ||" << RESET << std::endl;
+
+    
+    int barWidth = 50; 
+    int completedBars = (total > 0) ? (completed * barWidth / total) : 0;
+    int pendingBars   = barWidth - completedBars;
+
+    
+    std::cout << "\nProgress: ";
+    std::cout << GREEN;
+    for (int i = 0; i < completedBars; i++) std::cout << "#"; 
+    std::cout << GREY; 
+    for (int i = 0; i < pendingBars; i++) std::cout << "-"; 
+    std::cout << RESET;
+
+    std::cout << "  " << std::fixed << std::setprecision(1) 
+              << completedPercent << "% done, "
+              << pendingPercent << "% pending\n";
+
+    utils.waitForUserInput();
+
+    
 }

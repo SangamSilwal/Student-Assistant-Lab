@@ -93,7 +93,9 @@ void Utility::displayMainMenu(Utility &utils) {
     std::cout << BG_BLACK << "| " << CYAN << BOLD << "2." << RESET << BG_BLACK << WHITE << " View All Assignments              " << RESET << BG_BLACK << "|" << RESET << std::endl;
     std::cout << BG_BLACK << "| " << CYAN << BOLD << "3." << RESET << BG_BLACK << WHITE << " View Calendar                     " << RESET << BG_BLACK << "|" << RESET << std::endl;
     std::cout << BG_BLACK << "| " << CYAN << BOLD << "4." << RESET << BG_BLACK << WHITE << " Manage Todo List                  " << RESET << BG_BLACK << "|" << RESET << std::endl;
-    std::cout << BG_BLACK << "| " << CYAN << BOLD << "5." << RESET << BG_BLACK << WHITE << " Exit Application                  " << RESET << BG_BLACK << "|" << RESET << std::endl;
+    std::cout << BG_BLACK << "| " << CYAN << BOLD << "5." << RESET << BG_BLACK << WHITE << " View Routine                      " << RESET << BG_BLACK << "|" << RESET << std::endl;
+    std::cout << BG_BLACK << "| " << CYAN << BOLD << "6." << RESET << BG_BLACK << WHITE << " Try POMODORO timer                " << RESET << BG_BLACK << "|" << RESET << std::endl;
+    std::cout << BG_BLACK << "| " << CYAN << BOLD << "7." << RESET << BG_BLACK << WHITE << " Exit Application                  " << RESET << BG_BLACK << "|" << RESET << std::endl;
     std::cout << BRIGHT_GREEN << BG_BLACK << "+=========================================+" << RESET << std::endl;
     std::cout << std::endl;
     
@@ -154,7 +156,6 @@ void Utility::handleTodoMenu(TodoList &todo, Utility &utils) {
 
         switch (choice) {
             case 1: {
-                // Add task
                 std::cout << std::endl;
                 std::string task;
                 utils.printInputPrompt("Enter task description: ", "[DESC]");
@@ -171,7 +172,6 @@ void Utility::handleTodoMenu(TodoList &todo, Utility &utils) {
             }
 
             case 2: {
-                // Remove task
                 std::cout << std::endl;
                 int id;
                 utils.printInputPrompt("Enter task ID to remove: ", "[ID]");
@@ -189,7 +189,6 @@ void Utility::handleTodoMenu(TodoList &todo, Utility &utils) {
             }
 
             case 3: {
-                // View tasks
                 utils.clearScreen();
                 utils.printSectionHeader("YOUR TASKS", "[TASK]");
                 todo.viewTasks();
@@ -198,7 +197,6 @@ void Utility::handleTodoMenu(TodoList &todo, Utility &utils) {
             }
 
             case 4: {
-                // Mark task as done
                 std::cout << std::endl;
                 int id;
                 utils.printInputPrompt("Enter task ID to mark as done: ", "[DONE]");
@@ -214,8 +212,13 @@ void Utility::handleTodoMenu(TodoList &todo, Utility &utils) {
                 waitForUserInput();
                 break;
             }
+            case 5:
+            {
+                todo.displayStatistics();
+                break;
+            }
 
-            case 5: {
+            case 6: {
                 // Return to main menu
                 utils.printSuccessMessage("[>] Returning to main menu...");
                 SLEEP(800);
@@ -241,7 +244,8 @@ void Utility::displayTodoSubMenu(Utility &utils) {
     std::cout << BG_BLACK << "| " << YELLOW << BOLD << "2." << RESET << BG_BLACK << WHITE << " Remove Task                      " << RESET << BG_BLACK << "|" << RESET << std::endl;
     std::cout << BG_BLACK << "| " << YELLOW << BOLD << "3." << RESET << BG_BLACK << WHITE << " View All Tasks                   " << RESET << BG_BLACK << "|" << RESET << std::endl;
     std::cout << BG_BLACK << "| " << YELLOW << BOLD << "4." << RESET << BG_BLACK << WHITE << " Mark Task as Done               " << RESET << BG_BLACK << "|" << RESET << std::endl;
-    std::cout << BG_BLACK << "| " << RED << BOLD << "5." << RESET << BG_BLACK << BRIGHT_YELLOW << " Return to Main Menu             " << RESET << BG_BLACK << "|" << RESET << std::endl;
+    std::cout << BG_BLACK << "| " << YELLOW << BOLD << "5." << RESET << BG_BLACK << WHITE << " Display Statistics               " << RESET << BG_BLACK << "|" << RESET << std::endl;
+    std::cout << BG_BLACK << "| " << RED << BOLD << "6" << RESET << BG_BLACK << BRIGHT_YELLOW << " Return to Main Menu             " << RESET << BG_BLACK << "|" << RESET << std::endl;
     std::cout << BRIGHT_CYAN << BG_BLACK << "+=========================================+" << RESET << std::endl;
     std::cout << std::endl;
     
